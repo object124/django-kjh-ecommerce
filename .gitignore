@@ -1,0 +1,658 @@
+김준형
+i5611
+온라인
+
+
+
+채팅 채널
+백엔드 Python 부트캠프 14기:📘라운지-강의중
+검색하기
+
+📘라운지-강의중 채팅
+2025년 3월 26일
+
+김유찬 — 어제 오전 9:02
+1
+
+신용서 — 어제 오전 9:02
+1
+
+김준형 — 어제 오전 9:02
+1
+
+[강사] 허정식 — 어제 오전 9:38
+//dev_19
+    const recommand_elements = document.getElementsByClassName("recommend");
+    Array.from(recommand_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 추전하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
+[강사] 허정식 — 어제 오전 10:08
+                <!--dev_19-->
+                <a href="javascript:void(0)" data-uri="{% url 'pybo:question_vote' question.id  %}" class="recommend btn btn-sm btn-outline-secondary"> 추천
+                    <span class="badge rounded-pill bg-success">{{question.voter.count}}</span>
+                </a>
+
+[강사] 허정식 — 어제 오전 10:19
+<!--dev_19-->
+                <a href="javascript:void(0)" data-uri="{% url 'pybo:answer_vote' answer.id  %}" class="recommend btn btn-sm btn-outline-secondary"> 추천
+                    <span class="badge rounded-pill bg-success">{{answer.voter.count}}</span>
+                </a>   
+
+신용서 — 어제 오전 10:26
+선생님
+
+박수아 — 어제 오전 10:27
+@login_required(login_url="common:login")
+def answer_vote(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user == answer.author:
+        messages.error(request, "본인이 작성한 글은 추천할수 없습니다")
+    else:
+        answer.voter.add(request.user)
+    return redirect("pybo:detail", question_id=answer.question.id)
+
+신용서 — 어제 오전 10:27
+어제 answer_vote 테이블 만들지 않지 않았나요?
+
+박수아 — 어제 오전 10:27
+answer는 안 만들고 question만 만든 거 같아요
+
+모영재 — 어제 오전 10:27
+답변 추천 테이블이 없어서 오류가 생기네요
+
+[강사] 허정식 — 어제 오전 10:29
+dev_19
+    voter = models.ManyToManyField(User, related_name='voter_answer')
+
+신용서 — 어제 오전 10:32
+# 추천
+@login_required(login_url="common:login")
+def answer_vote(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+
+    if request.user == answer.author:
+        message.error(request, "본인의 개시물에는 추천할 수 없습니다.")
+    else:
+        answer.voter.add(request.user)
+
+    return redirect("pybo:detail", question_id=answer.question.id)
+
+모영재 — 어제 오전 10:32
+@login_required(login_url="common:login")
+def answer_vote(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+
+    if request.user == answer.author:
+        messages.error(request, "본인이 작성한 글은 추천할 수 없습니다.")
+    else:
+        answer.voter.add(request.user)
+
+    return redirect("pybo:detail", question_id=answer.question.id)
+
+정지은 — 어제 오전 10:35
+@login_required(login_url='common:login')
+def answer_vote(request,answer_id):
+    answer = get_object_or_404(Answer,pk=answer_id)
+    
+    if request.user == answer.author:
+        messages.error(request,"본인이 작성한 글은 추천할 수 없습니다.")
+    elif request.user in answer.voter.all():
+        messages.warning(request, "이미 추천한 글입니다.")
+    else:
+        answer.voter.add(request.user)
+        
+    return redirect('pybo:detail', question_id=answer.question.id)
+ 
+ (수정됨)
+
+[강사] 허정식 — 어제 오전 11:45
+<div class="input-group">
+                <input type="text" id="search_kw" class="form-control" value="{{ kw|default_if_none:'' }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+                </div>
+            </div>
+
+[멘토] 안성민 — 어제 오전 11:55
+13시 발표는 1팀 먼저 해주시면 되겠습니다!
+
+[멘토] 안성민 — 어제 오후 12:59
+13시 출석 체크하겠습니다. 
+웹 캠을 켜주시고 얼굴이 잘 보이도록 카메라 세팅 부탁드립니다!
+[오후 1:00]
+스크린샷 촬영이 완료되었습니다.
+[오후 1:02]
+28일입니다!
+
+박수아 — 어제 오후 1:02
+마지막 금요일 아니었나요?
+
+김유찬 — 어제 오후 1:02
+이번 주 금요일이네요
+
+김준형 — 어제 오후 1:02
+28일에 휴강으로 되어있어요
+
+홍태준 — 어제 오후 1:42
+저희 피피티 파일은 여기다 올리면 될까요
+[오후 1:43]
+회고1팀맛나비피피티 및 파일 블록 다이어그램
+
+
+
+맛나비 발표_신용서_김준형_김유찬_박수아_홍태준_조영재.pdf
+5.02 MB
+
+4
+
+김규민 — 어제 오후 1:45
+@홍태준 1팀 깃헙 알려주실 수 있을까요
+
+신용서 — 어제 오후 1:45
+https://github.com/PepperShin/MatNaVi
+GitHub
+GitHub - PepperShin/MatNaVi: 멋사 리엑트 프로젝트
+멋사 리엑트 프로젝트. Contribute to PepperShin/MatNaVi development by creating an account on GitHub.
+
+
+3
+
+박재정 — 어제 오후 1:45
+
+아무튼됐조 CultureWay 발표자료.pptx
+3.43 MB
+
+4
+
+홍태준 — 어제 오후 1:45
+저희도 깃 레포지토리 부탁드릴게요
+
+박재정 — 어제 오후 1:46
+https://github.com/I-love-MU/React
+GitHub
+GitHub - I-love-MU/React
+Contribute to I-love-MU/React development by creating an account on GitHub.
+
+
+5
+
+홍태준 — 어제 오후 1:46
+따봉추
+
+@홍태준
+따봉추
+
+김규민 — 어제 오후 1:52
+현재 결과물이 어떤 브랜치인가요?
+
+홍태준 — 어제 오후 1:52
+마스터 브랜치에 푸쉬해놨어요
+[오후 1:53]
+푸쉬 안돼있나요?
+[오후 1:54]
+final submit 고생했어요 다들이라는 브랜치로 다시 푸쉬 해놨어요]
+
+1
+
+[강사] 허정식 — 어제 오후 2:22
+<!--dev_20 page와 kw를 동시에 GET으로 요청할 수 있는 searchForm을 추가-->
+<form id="searchForm" method="get" action="{% url 'index' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|defualt_if_none:''}}">
+    <input type="hidden" id="page" name="page" value="{{page}}">
+</form>
+[오후 2:27]
+<!--dev_20-->
+                <a class="page-link" href="javascript:void(0)" data-page="{{question_list.previous_page_number}}" >이전</a>
+
+[강사] 허정식 — 어제 오후 2:46
+    const page_elements = document.getElementsByClassName("page-link");
+    Array.from(page_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            document.getElementById('page').value = this.dataset.page;
+            document.getElementById('searchForm').submit();
+        });
+    });
+    
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function() {
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+        document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        document.getElementById('searchForm').submit();
+    });
+
+[강사] 허정식 — 어제 오후 3:14
+    if kw:
+        question_list = question_list.filter(
+            Q(subject__icontains=kw)  # 제목검색
+            | Q(content__icontains=kw)  # 내용 검색
+            | Q(answer__content__icontains=kw)  # 답변내용 검색
+            | Q(author__username__icontains=kw)  # 질문 글쓴이 검색
+            | Q(answer__author__username__icontains=kw)  # 답변 글쓴이 검색
+        ).distinct()
+
+[강사] 허정식 — 어제 오후 3:22
+
+
+
+
+
+{% extends 'base.html' %}
+
+{% block content %}    
+<div class="container my-3">
+    
+확장
+message.txt
+6KB
+[오후 3:23]
+def index(request):
+
+    # ?page=4
+    page = request.GET.get("page", "1")  # 페이지
+    kw = request.GET.get("kw", "")  # 검색어
+
+    question_list = Question.objects.order_by("-create_date")
+
+    # dev_20
+    if kw:
+        question_list = question_list.filter(
+            Q(subject__icontains=kw)  # 제목검색
+            | Q(content__icontains=kw)  # 내용 검색
+            | Q(answer__content__icontains=kw)  # 답변내용 검색
+            | Q(author__username__icontains=kw)  # 질문 글쓴이 검색
+            | Q(answer__author__username__icontains=kw)  # 답변 글쓴이 검색
+        ).distinct()
+
+    paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
+    page_obj = paginator.get_page(page)
+
+    # dev_20 수정
+    context = {"question_list": page_obj, "page": page, "kw": kw}
+
+    return render(request, "pybo/question_list.html", context)
+
+[강사] 허정식 — 어제 오후 4:09
+1. MTV 모델에 대하여 설명하시오.
+2. QuerySet 객체에 대하여 설명하시오.
+3. Q 함수에 대하여 예제를 들어 설명하시오.
+4.pybo 프로젝트에서 Anchor 를 구현하시오.참고(https://wikidocs.net/71792)
+3월26일-학습정리.txt
+1KB
+
+[멘토] 안성민 — 어제 오후 5:58
+18시 출석 체크하겠습니다. 
+웹 캠을 켜주시고 얼굴이 잘 보이도록 카메라 세팅 부탁드립니다!
+[오후 6:00]
+스크린샷 촬영이 완료되었습니다.
+퇴실하실 때 잊지말고 QR 체크해 주세요!
+
+박수아 — 어제 오후 6:00
+수고하셨습니다~
+
+[멘토] 안성민 — 어제 오후 6:00
+고생많으셨습니다!!
+
+정지은 — 어제 오후 6:00
+수고하셨습니다
+
+김준형 — 어제 오후 6:00
+수고하셨습니다
+
+김유찬 — 어제 오후 6:00
+고생하셨습니다
+
+신용서 — 어제 오후 6:00
+수고하셨습니다
+2025년 3월 27일
+
+[멘토] 안성민 — 오전 8:59
+09시 출석 체크하겠습니다. 
+웹 캠을 켜주시고 얼굴이 잘 보이도록 카메라 세팅 부탁드립니다!
+NEW
+[오전 9:00]
+스크린샷 촬영이 완료되었습니다.
+09시 10분 전까지 QR 체크도 꼭 해주세요!
+NEW
+
+모영재 — 오전 9:01
+1
+
+박수아 — 오전 9:01
+1
+NEW
+
+김준형 — 오전 9:02
+1
+NEW
+
+[강사] 허정식 — 오전 10:08
+django-admin startproject config .
+NEW
+NEW
+[오전 10:15]
+# Created by https://www.toptal.com/developers/gitignore/api/django
+# Edit at https://www.toptal.com/developers/gitignore?templates=django
+
+### Django ###
+*.log
+*.pot
+확장
+message.txt
+6KB
+NEW
+
+
+#📘라운지-강의중에 메시지 보내기
+﻿
+
+
+
+
+
+📘라운지-강의중(채널) 멤버 목록
+운영진/매니저, 4명운영진/매니저 — 4
+
+권은아매니저
+
+김호현매니저
+
+멋쟁이사자처럼 LEAD 상열
+
+박춘식 매니저
+강사진/멘토진, 2명강사진/멘토진 — 2
+
+[강사] 허정식
+
+[멘토] 안성민
+온라인, 5명온라인 — 5
+
+김준형
+
+박수아
+
+박재정
+
+정지은
+
+조영재
+오프라인, 9명오프라인 — 9
+
+김규민
+
+김규학
+
+
+김유찬
+
+김태원 매니저
+
+멋쟁이사자처럼
+
+모영재
+
+신용서
+;
+# Created by https://www.toptal.com/developers/gitignore/api/django
+# Edit at https://www.toptal.com/developers/gitignore?templates=django
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+
+# If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
+# in your Git repository. Update and uncomment the following line accordingly.
+# <django-project-name>/staticfiles/
+
+### Django.Python Stack ###
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Translations
+*.mo
+
+# Django stuff:
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+doc/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype staticfiles type analyzer
+.pytype/
+
+# End of https://www.toptal.com/developers/gitignore/api/django
+
+
+# Created by https://www.toptal.com/developers/gitignore/api/pycharm
+# Edit at https://www.toptal.com/developers/gitignore?templates=pycharm
+
+### PyCharm ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+# .idea/artifacts
+# .idea/compiler.xml
+# .idea/jarRepositories.xml
+# .idea/modules.xml
+# .idea/*.iml
+# .idea/modules
+# *.iml
+# *.ipr
+
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Editor-based Rest Client
+.idea/httpRequests
+
+# Android studio 3.1+ serialized cache file
+.idea/caches/build_file_checksums.ser
+
+### PyCharm Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+
+# *.iml
+# modules.xml
+# .idea/misc.xml
+# *.ipr
+
+# Sonarlint plugin
+# https://plugins.jetbrains.com/plugin/7973-sonarlint
+.idea/**/sonarlint/
+
+# SonarQube Plugin
+# https://plugins.jetbrains.com/plugin/7238-sonarqube-community-plugin
+.idea/**/sonarIssues.xml
+
+# Markdown Navigator plugin
+# https://plugins.jetbrains.com/plugin/7896-markdown-navigator-enhanced
+.idea/**/markdown-navigator.xml
+.idea/**/markdown-navigator-enh.xml
+.idea/**/markdown-navigator/
+
+# Cache file creation bug
+# See https://youtrack.jetbrains.com/issue/JBR-2257
+.idea/$CACHE_FILE$
+
+# CodeStream plugin
+# https://plugins.jetbrains.com/plugin/12206-codestream
+.idea/codestream.xml
+
+# End of https://www.toptal.com/developers/gitignore/api/pycharm
+/.idea/
+/.env.prod
